@@ -1,0 +1,6 @@
+[manager]
+n72 ansible_host=192.168.56.72  ansible_ssh_port=22 ansible_ssh_user=sylvain  ansible_ssh_pass=sylv1 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[worker]
+n71 ansible_host=192.168.56.71  ansible_ssh_port=22 ansible_ssh_user=sylvain  ansible_ssh_pass=sylv1 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+n70 ansible_host=192.168.56.70  ansible_ssh_port=22 ansible_ssh_user=sylvain  ansible_ssh_pass=sylv1 ansible_ssh_common_args='-o StrictHostKeyChecking=no'

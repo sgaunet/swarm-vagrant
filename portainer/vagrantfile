@@ -1,0 +1,42 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # Base VM OS configuration.
+  config.vm.box = "centos/7"
+  #config.vm.synced_folder '.', '/vagrant', disabled: true
+  #config.ssh.insert_key = false
+
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
+
+  config.vm.provider :virtualbox do |v|
+    v.memory = 4096
+    v.cpus = 2
+  end
+
+  # Define two VMs with static private IP addresses.
+  boxes = [
+    { :name => "n70", :ip => "192.168.56.70" },
+    { :name => "n71", :ip => "192.168.56.71" },
+    { :name => "n72", :ip => "192.168.56.72" }
+  ]
+
+  # Provision each of the VMs.
+  boxes.each do |opts|
+    config.vm.define opts[:name] do |config|
+      config.vm.hostname = opts[:name]
+      config.vm.network :private_network, ip: opts[:ip]
+
+      config.vm.provision "ansible_local" do |ansible|
+          ansible.playbook = "playbook.yml"
+        end
+
+      # Provision both VMs using Ansible after the last VM is booted.
+      if opts[:name] == "n72"
+          config.vm.provision :shell, :privileged => false, :path => "go.sh"
+      end
+    end
+  end
+end
