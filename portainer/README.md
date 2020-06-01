@@ -19,6 +19,18 @@ vagrant up
 * n71 : 192.168.56.71  
 * n72 : 192.168.56.72  (manager)
 
+```
+$ vagrant ssh n72
+[vagrant@n72 ~]$ sudo -i          
+[root@n72 ~]# docker service ls
+ID                  NAME                  MODE                REPLICAS            IMAGE                        PORTS
+riyz9unz0rv1        portainer_agent       global              3/3                 portainer/agent:latest       
+vw18vp2nusyy        portainer_portainer   replicated          0/1                 portainer/portainer:latest   *:8000->8000/tcp, *:9000->9000/tcp
+[root@n72 ~]# docker service ls
+ID                  NAME                  MODE                REPLICAS            IMAGE                        PORTS
+riyz9unz0rv1        portainer_agent       global              3/3                 portainer/agent:latest       
+vw18vp2nusyy        portainer_portainer   replicated          1/1                 portainer/portainer:latest   *:8000->8000/tcp, *:9000->9000/tcp
+```
 
 Portainer will be accessible with this url : [http://192.168.56.72:9000/](http://192.168.56.72:9000/)
 
